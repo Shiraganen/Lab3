@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comic Reader</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script>
+        function setTheme(theme) {
+            document.body.className = theme;
+            document.cookie = "theme=" + theme + "; path=/; max-age=31536000"; // 1 year
+        }
+
+        function setLanguage(language) {
+            document.cookie = "language=" + language + "; path=/; max-age=31536000"; // 1 year
+            location.reload(); // Перезагружаем страницу для применения языка
+        }
+
+        function getCookie(name) {
+            const value = document.cookie;
+            const parts = value.split('; ' + name + '=');
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return null;
+        }
+
+        window.onload = function() {
+            const savedTheme = getCookie("theme") || "light";
+            const savedLanguage = getCookie("language") || "ru";
+            setTheme(savedTheme);
+
+            if (savedLanguage === "en") {
+                document.getElementById("welcome").textContent = "Welcome to Comic Reader";
+                document.getElementById("about").textContent = "About Us";
+                document.getElementById("catalog").textContent = "Catalog";
+                document.getElementById("contact").textContent = "Contact";
+                document.getElementById("start-reading").textContent = "Start Reading";
+                document.getElementById("change-theme").textContent = "Change Theme";
+                document.getElementById("change-language").textContent = "Change Language";
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        
+        <div class="logo">Comic Reader</div>
+        <nav>
+            <a href="#catalog" id="catalog">Каталог</a>
+            <a href="#about" id="about">О нас</a>
+            <a href="#contact" id="contact">Контакты</a>
+        </nav>
+        <div class="settings">
+            <button onclick="setTheme('dark')" id="change-theme">Темная Тема</button>
+            <select onchange="setLanguage(this.value)" id="language-select">
+                <option value="ru">Русский</option>
+                <option value="en">English</option>
+            </select>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1 id="welcome">Откройте мир комиксов</h1>
+            <img src="{% static 'images.jpg' %}" alt="Comic Image">
+            <p>Читайте любимые комиксы в удобном формате, наслаждайтесь высоким качеством изображения и удобной навигацией.</p>
+            <a href="#start-reading" class="btn" id="start-reading">Начать читать</a>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="feature">
+            <h2>Гибкая настройка</h2>
+            <p>Изменяйте интерфейс по вашему вкусу, выбирайте темы и язык.</p>
+        </div>
+        <div class="feature">
+            <h2>Качество изображений</h2>
+            <p>Комиксы с высоким качеством и разрешением для лучшего просмотра.</p>
+        </div>
+        <div class="feature">
+            <h2>Большой каталог</h2>
+            <p>Огромный выбор комиксов на любой вкус и интерес.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2024 Comic Reader. Все права защищены.</p>
+    </footer>
+</body>
+</html>
